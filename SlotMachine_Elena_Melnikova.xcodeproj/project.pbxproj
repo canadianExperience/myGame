@@ -15,6 +15,9 @@
 		C0FD7C0E21E8FCCF00B06D9C /* banana.gif in Resources */ = {isa = PBXBuildFile; fileRef = C0FD7C0D21E8FCCF00B06D9C /* banana.gif */; };
 		C0FD7C1021E8FCE100B06D9C /* cherry.gif in Resources */ = {isa = PBXBuildFile; fileRef = C0FD7C0F21E8FCE100B06D9C /* cherry.gif */; };
 		C0FD7C1221E8FCEB00B06D9C /* grapes.gif in Resources */ = {isa = PBXBuildFile; fileRef = C0FD7C1121E8FCEB00B06D9C /* grapes.gif */; };
+		C0FD7C1621E9122300B06D9C /* bell.gif in Resources */ = {isa = PBXBuildFile; fileRef = C0FD7C1321E9122300B06D9C /* bell.gif */; };
+		C0FD7C1721E9122300B06D9C /* seven.gif in Resources */ = {isa = PBXBuildFile; fileRef = C0FD7C1421E9122300B06D9C /* seven.gif */; };
+		C0FD7C1821E9122300B06D9C /* orange.gif in Resources */ = {isa = PBXBuildFile; fileRef = C0FD7C1521E9122300B06D9C /* orange.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		C0FD7C0D21E8FCCF00B06D9C /* banana.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = banana.gif; path = ../../images/banana.gif; sourceTree = "<group>"; };
 		C0FD7C0F21E8FCE100B06D9C /* cherry.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = cherry.gif; path = ../../images/cherry.gif; sourceTree = "<group>"; };
 		C0FD7C1121E8FCEB00B06D9C /* grapes.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = grapes.gif; path = ../../images/grapes.gif; sourceTree = "<group>"; };
+		C0FD7C1321E9122300B06D9C /* bell.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = bell.gif; path = ../../images/bell.gif; sourceTree = "<group>"; };
+		C0FD7C1421E9122300B06D9C /* seven.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = seven.gif; path = ../../images/seven.gif; sourceTree = "<group>"; };
+		C0FD7C1521E9122300B06D9C /* orange.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = orange.gif; path = ../../images/orange.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,9 @@
 				C0FD7C0221E8FABA00B06D9C /* Assets.xcassets */,
 				C0FD7C0D21E8FCCF00B06D9C /* banana.gif */,
 				C0FD7C0F21E8FCE100B06D9C /* cherry.gif */,
+				C0FD7C1321E9122300B06D9C /* bell.gif */,
+				C0FD7C1521E9122300B06D9C /* orange.gif */,
+				C0FD7C1421E9122300B06D9C /* seven.gif */,
 				C0FD7C1121E8FCEB00B06D9C /* grapes.gif */,
 				C0FD7C0421E8FABA00B06D9C /* LaunchScreen.storyboard */,
 				C0FD7C0721E8FABA00B06D9C /* Info.plist */,
@@ -136,6 +145,9 @@
 				C0FD7C0321E8FABA00B06D9C /* Assets.xcassets in Resources */,
 				C0FD7C0121E8FAB900B06D9C /* Main.storyboard in Resources */,
 				C0FD7C0E21E8FCCF00B06D9C /* banana.gif in Resources */,
+				C0FD7C1621E9122300B06D9C /* bell.gif in Resources */,
+				C0FD7C1721E9122300B06D9C /* seven.gif in Resources */,
+				C0FD7C1821E9122300B06D9C /* orange.gif in Resources */,
 				C0FD7C1021E8FCE100B06D9C /* cherry.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
