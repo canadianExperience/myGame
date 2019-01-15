@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var lblBet: UILabel!
     
     
+    @IBOutlet weak var stepper: UIStepper!
     @IBOutlet weak var lblRatio: UILabel!
     
     
@@ -42,7 +43,7 @@ class ViewController: UIViewController {
     var lossNumber = 0
     var spinResult = ["", "", ""]
     var fruits = ""
-    var winRatio = 0
+    var winRatio: Double = 0
     var grapes = 0
     var bananas = 0
     var oranges = 0
@@ -59,6 +60,16 @@ class ViewController: UIViewController {
         
         showPlayerStats()
         
+        // Set background image
+        
+//        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+//        backgroundImage.image = UIImage(named: "background.png")
+//        backgroundImage.contentMode = UIView.ContentMode.scaleToFill
+//        self.view.insertSubview(backgroundImage, at: 0)
+        
+        // Set JackPot label
+        
+        
         
     }
     
@@ -72,15 +83,21 @@ class ViewController: UIViewController {
 //        $("#playerWins").text("Wins: " + winNumber);
 //        $("#playerLosses").text("Losses: " + lossNumber);
 //        $("#playerWinRatio").text("Win Ratio: " + (winRatio * 100).toFixed(2) + "%");
+      
+      //  lblBet.text! = String(Int(stepper.value))
         
-        lblJackpot.text = "Jackpot: \(jackpot)"
-        lblCredits.text = "Player Money: \(playerMoney)"
+       
+        
+        lblBet.text = String(playerBet)
+        
+        lblJackpot.text = "\(jackpot)"
+        lblCredits.text = "\(playerMoney)"
         lblTurn.text = "Turn: \(turn)"
-        lblWins.text = "Wins: \(winNumber)"
+        lblWins.text = "\(winNumber)"
         lblLosses.text = "Losses: \(lossNumber)"
         var winRatioRounded = "n/a"
         if turn > 0 {
-            winRatio = winNumber / turn;
+            winRatio = Double(winNumber) / Double(turn)
             winRatioRounded = String(Double(String(format: "%.2f", winRatio * 100))!) + "%"
         }
         
@@ -109,6 +126,8 @@ class ViewController: UIViewController {
         winNumber = 0
         lossNumber = 0
         winRatio = 0
+//        stepper.value = 0
+
     }
     
     /* Check to see if the player won the jackpot */
@@ -330,22 +349,44 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func bet1(_ sender: UIButton) {
+        playerBet = 1
+        lblBet.text = String(playerBet)
+    }
     
+    @IBAction func bet10(_ sender: UIButton) {
+        playerBet = 10
+        lblBet.text = String(playerBet)
+    }
     
+    @IBAction func bet100(_ sender: UIButton) {
+        playerBet = 100
+        lblBet.text = String(playerBet)
+    }
     
-    
+    @IBAction func betMax(_ sender: UIButton) {
+        playerBet = playerMoney
+        lblBet.text = String(playerBet)
+    }
     
     @IBAction func quitGame(_ sender: UIButton) {
+        exit(0)
     }
     @IBAction func stepper(_ sender: UIStepper) {
+        
+        let stepperValue = Int(stepper.value)
+        
+        lblBet.text = String(stepperValue)
     }
     
     @IBAction func resetGame(_ sender: UIButton) {
+        resetAll()
+        showPlayerStats()
     }
     @IBAction func spin(_ sender: UIButton) {
         playerBet = Int(lblBet.text!)!
         
-        if (playerMoney == 0)
+        if playerMoney == 0
         {
             //        if (confirm("You ran out of Money! \nDo you want to play again?")) {
             //            resetAll();
@@ -357,15 +398,15 @@ class ViewController: UIViewController {
             
             
         }
-        else if (playerBet > playerMoney) {
+        else if playerBet > playerMoney {
             // alert("You don't have enough Money to place that bet.")
             alert1("YOUR CREDITS", "You don't have enough Money to place that bet.")
         }
-        else if (playerBet < 0) {
+        else if playerBet <= 0 {
             //alert("All bets must be a positive $ amount.");
             alert1("YOUR CREDITS", "All bets must be a positive $ amount.")
         }
-        else if (playerBet <= playerMoney) {
+        else if playerBet <= playerMoney {
             spinResult = Reels();
             fruits = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2]
             lblFruits.text = fruits
