@@ -1,56 +1,42 @@
 //
 //  ViewController.swift
-//  SlotMachine_Elena_Melnikova
-//
 //  Created by Elena Melnikova on 2019-01-11.
+//  Slot Machine
+//  iPhone SE and iPhone 5s
+//  Student ID: 301025880
+//  Description: SlotMachine mobile application imitates a casino game. The application contains BETs and SPIN buttons, RES button sets the game to initial parameters, QUIT button terminates the application, game results are displayed into the CREDIT, BET, WINNIGS and JACKPOT labels, PickerView is used for reel animation.
 //  Copyright © 2019 Centennial College. All rights reserved.
-//
 
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    // Set a number of pickerView components
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
     }
     
+    // Set initial parameters
     @IBOutlet weak var lblJackpot: UILabel!
     
     @IBOutlet weak var lblCredits: UILabel!
     
-    
-    @IBOutlet weak var lblTurn: UILabel!
-    
     @IBOutlet weak var lblWins: UILabel!
-    
-    
-    @IBOutlet weak var lblLosses: UILabel!
-    
     
     @IBOutlet weak var lblBet: UILabel!
     
-    
-    @IBOutlet weak var stepper: UIStepper!
-    @IBOutlet weak var lblRatio: UILabel!
-    
-    
-    @IBOutlet weak var lblResult: UILabel!
-    
-    @IBOutlet weak var lblFruits: UILabel!
-    
-    
     @IBOutlet weak var pickerView: UIPickerView!
+    
+    @IBOutlet weak var btnSpin: UIButton!
     
     var playerMoney = 1000
     var winnings = 0
     var jackpot = 5000
-    var turn = 0
     var playerBet = 0
     var winNumber = 0
     var lossNumber = 0
     var spinResult = ["", "", ""]
-    var fruits = ""
-    var winRatio: Double = 0
     var grapes = 0
     var bananas = 0
     var oranges = 0
@@ -59,29 +45,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var bells = 0
     var sevens = 0
     var blanks = 0
-    
-    //var fruitArray = [[String]]()
     var fruitArray = [String]()
     var component1 = [Int]()
     var component2 = [Int]()
     var component3 = [Int]()
     var bounds: CGRect = CGRect.zero
     
-
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
-    
-    func randomNumber(num: Int) -> Int {
-        return Int(arc4random_uniform(UInt32(num)))
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         fruitArray = ["blank","grapes","banana","orange","cherry","bar","bell","seven"]
+       
         // Start pickerView image initialization
         for i in 0..<8 {
             component1.append(i)
@@ -92,44 +70,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         pickerView.delegate = self
         pickerView.dataSource = self
         
-        
         showPlayerStats()
-        
-        
-      
-        
-
-        
-        
-        
     }
     
-    /* Utility function to show Player Stats */
+    // Utility function to show Player Stats
     func showPlayerStats()
     {
-        
-      
-      //  lblBet.text! = String(Int(stepper.value))
-        
-       
-        
         lblBet.text = String(playerBet)
-        
         lblJackpot.text = "\(jackpot)"
         lblCredits.text = "\(playerMoney)"
-      //  lblTurn.text = "Turn: \(turn)"
         lblWins.text = "\(winNumber)"
-       // lblLosses.text = "Losses: \(lossNumber)"
-        var winRatioRounded = "n/a"
-        if turn > 0 {
-            winRatio = Double(winNumber) / Double(turn)
-            winRatioRounded = String(Double(String(format: "%.2f", winRatio * 100))!) + "%"
-        }
-        
-       // lblRatio.text = "Win Ratio: \(winRatioRounded)"
     }
     
-    /* Utility function to reset all fruit tallies */
+    // Utility function to reset all fruit tallies
     func resetFruitTally() {
         grapes = 0
         bananas = 0
@@ -141,39 +94,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         blanks = 0
     }
     
-    /* Utility function to reset the player stats */
+    // Utility function to reset the player stats
     func resetAll() {
         playerMoney = 1000
         winnings = 0
         jackpot = 5000
-        turn = 0
         playerBet = 0
         winNumber = 0
-        lossNumber = 0
-        winRatio = 0
-//        stepper.value = 0
-
     }
     
-    /* Check to see if the player won the jackpot */
+    // Check to see if the player won the jackpot
     func checkJackPot() {
         
-        
-        /* compare two random values */
+        // compare two random values
        
         var jackPotTry = Int(arc4random_uniform(UInt32(51))) + 1
         
         var jackPotWin = Int(arc4random_uniform(UInt32(51))) + 1
     
-        
-        
         if jackPotTry == jackPotWin {
-            
             let message = "You Won the $ \(jackpot) Jackpot!!"
-            
             alert1("JACKPOT", message)
-            
-            
             playerMoney += jackpot
             jackpot = 1000
             play(soundName: "jackPot")
@@ -181,9 +122,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else {
             play(soundName: "win")
         }
-        
     }
-    
+    // Create alert function with "OK" button
     func alert1(_ title: String, _ message: String){
         play(soundName: "alert")
         
@@ -194,9 +134,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         // show the alert
         self.present(alert, animated: true, completion: nil)
-        
     }
-    
+    // Create alert function with "YES" and "NO" buttons
     func alert2(_ title: String, _ message: String){
         
         play(soundName: "alert")
@@ -214,30 +153,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.present(alert, animated: true, completion: nil)
     }
     
+        // Handler for "YES" button
     func alertHandler(){
+        btnSpin.isEnabled = true
         resetAll();
         showPlayerStats();
     }
     
-    
-    /* Utility function to show a win message and increase player money */
+    // Utility function to show a win message and increase player money
     func showWinMessage() {
         playerMoney += winnings;
-        
-      //  lblResult.text = "You Won: $ \(winnings)"
-        
         resetFruitTally();
         checkJackPot();
     }
     
-    /* Utility function to show a loss message and reduce player money */
+    // Utility function to show a loss message and reduce player money
     func showLossMessage() {
         playerMoney -= playerBet;
-        lblResult.text = "You Lost!"
         resetFruitTally();
     }
     
-    /* Utility function to check if a value falls within a range of bounds */
+    // Utility function to check if a value falls within a range of bounds
     func checkRange(_ value: Int,_ lowerBounds: Int,_ upperBounds: Int) -> Int {
         
         if (value >= lowerBounds && value <= upperBounds)
@@ -249,27 +185,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    /* When this function is called it determines the betLine results.
-     e.g. Bar - Orange - Banana */
+//    When this function is called it determines the betLine results.
+//     e.g. Bar - Orange - Banana
     func Reels() -> [String]{
         var betLine = [" ", " ", " "];
         var outCome = [0, 0, 0];
-        //
-        //        for column in 0..<8 {
-        //            sum += row * column
-        //        }
         
         for spin in 0..<3{
-            
-            
             outCome[spin] = Int(arc4random_uniform(UInt32(65))) + 1
-            
             switch (outCome[spin]) {
             //Blank
             case checkRange(outCome[spin], 1, 27):  // 41.5% probability
                 betLine[spin] = fruitArray[0]
                 blanks += 1
-               
              //Grapes
             case checkRange(outCome[spin], 28, 37): // 15.4% probability
                 betLine[spin] = fruitArray[1]
@@ -298,16 +226,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             case checkRange(outCome[spin], 65, 65): //  1.5% probability
                 betLine[spin] = fruitArray[7]
                 sevens += 1
-                
             default:
                 continue
-                
             }
         }
         return betLine
     }
     
-    /* This function calculates the player's winnings, if any */
+    // This function calculates the player's winnings, if any
     func determineWinnings()
     {
         if (blanks == 0)
@@ -362,85 +288,67 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             winNumber += 1
             showWinMessage()
-         //   audioPlayerWin.play()
-//            play(sound: "win")
-           // Model.instance.play(sound: Constant.spin_sound)
-          //  play(soundName: "win")
         }
         else
         {
             lossNumber += 1
             showLossMessage()
         }
-        
     }
-    
-    
+   
+    // Set bet1 label
     @IBAction func bet1(_ sender: UIButton) {
         play(soundName: "bet")
         playerBet = 1
         lblBet.text = String(playerBet)
     }
-    
+    // Set bet10 label
     @IBAction func bet10(_ sender: UIButton) {
         play(soundName: "bet")
         playerBet = 10
         lblBet.text = String(playerBet)
     }
-    
+    // Set bet100 label
     @IBAction func bet100(_ sender: UIButton) {
         play(soundName: "bet")
         playerBet = 100
         lblBet.text = String(playerBet)
     }
-    
+    // Set betMax label
     @IBAction func betMax(_ sender: UIButton) {
         play(soundName: "bet")
         playerBet = playerMoney
         lblBet.text = String(playerBet)
     }
-    
+    // QUIT button action
     @IBAction func quitGame(_ sender: UIButton) {
         play(soundName: "quit")
-       // close(0)
-        exit(0)
     }
-//    @IBAction func stepper(_ sender: UIStepper) {
-//
-//        let stepperValue = Int(stepper.value)
-//
-//        lblBet.text = String(stepperValue)
-//    }
-    
+    // RES button action, reset game to initial stage
     @IBAction func resetGame(_ sender: UIButton) {
         play(soundName: "res")
         resetAll()
         showPlayerStats()
+        btnSpin.isEnabled = true
     }
+    // SPIN button action
     @IBAction func spin(_ sender: UIButton) {
         play(soundName: "spin")
         playerBet = Int(lblBet.text!)!
         
         if playerMoney == 0
         {
-
-            
-            alert2("YOUR CREDITS", "You ran out of Money! \nDo you want to play again?")
-            
-            
-            
+            alert2("ATTENTION", "You ran out of Money! \nDo you want to play again?")
+            btnSpin.isEnabled = false
         }
         else if playerBet > playerMoney {
-            // alert("You don't have enough Money to place that bet.")
-            alert1("YOUR CREDITS", "You don't have enough Money to place that bet.")
+            alert1("ATTENTION", "You don't have enough Money to place that bet.")
         }
         else if playerBet <= 0 {
-            //alert("All bets must be a positive $ amount.");
-            alert1("YOUR CREDITS", "All bets must be a positive $ amount.")
+            alert1("ATTENTION", "All bets must be a positive $ amount.")
         }
         else if playerBet <= playerMoney {
             spinResult = Reels();
-            fruits = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2]
             
             let indexOf0 = fruitArray.firstIndex(of: spinResult[0])!
             let indexOf1 = fruitArray.firstIndex(of: spinResult[1])!
@@ -449,32 +357,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             pickerView.selectRow(indexOf0, inComponent: 0, animated: true)
             pickerView.selectRow(indexOf1, inComponent: 1, animated: true)
             pickerView.selectRow(indexOf2, inComponent: 2, animated: true)
-            
-           
-            
-            
-          //  lblFruits.text = fruits
+  
             determineWinnings();
-            turn += 1
             showPlayerStats();
         }
         else {
-            // alert("Please enter a valid bet amount")
             alert1("YOUR CREDITS", "Please enter a valid bet amount")
         }
     }
     
-    //UIPickerView DataSource
+    // UIPickerView DataSource
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         //number of rows
         return 8
-    }
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        
-        //number of components
-        return 3
     }
     
     func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
@@ -487,9 +383,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
-        let myView = UIView(frame: CGRect(x:0, y:0, width:pickerView.bounds.width - 140, height:65))
+        // Set pickerView size and size of images
+        let myView = UIView(frame: CGRect(x:0, y:0, width:pickerView.bounds.width - 140, height:58))
         let myImageView = UIImageView(frame: CGRect(x:0, y:0, width:58, height:58))
         
+        // Set images to pickerVew rows
         switch component {
         case 0:
             let fruit = fruitArray[component1[row]]
@@ -508,28 +406,32 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return myView
     }
     
+    // This function play sounds
     func play(soundName: String) {
-        
-//        if let soundURL = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
-//            var mySound: SystemSoundID = 0
-//            AudioServicesCreateSystemSoundID(soundURL as CFURL, &mySound)
-//            // Play
-//            AudioServicesPlaySystemSound(mySound);
-//        }
         
         // Play system sound with custom mp3 file
         if let customSoundUrl = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
             var customSoundId: SystemSoundID = 0
             AudioServicesCreateSystemSoundID(customSoundUrl as CFURL, &customSoundId)
-            //let systemSoundId: SystemSoundID = 1016  // to play apple's built in sound, no need for upper 3 lines
             
-            AudioServicesAddSystemSoundCompletion(customSoundId, nil, nil, { (customSoundId, _) -> Void in
-                AudioServicesDisposeSystemSoundID(customSoundId)
-            }, nil)
+//            AudioServicesAddSystemSoundCompletion(customSoundId, nil, nil, { (customSoundId, _) -> Void in
+//                AudioServicesDisposeSystemSoundID(customSoundId)
+//            }, nil)
             
+            
+            if soundName == "quit" {
+                AudioServicesAddSystemSoundCompletion(customSoundId, nil, nil, soundFinished, nil)
+            }
             AudioServicesPlaySystemSound(customSoundId)
         }
     }
+}
 
+//Play sound and then exit from app
+func soundFinished(_ snd:UInt32, _ c:UnsafeMutableRawPointer?) {
+    print("finished!")
+    AudioServicesRemoveSystemSoundCompletion(snd)
+    AudioServicesDisposeSystemSoundID(snd)
+    exit(0)
 }
 
